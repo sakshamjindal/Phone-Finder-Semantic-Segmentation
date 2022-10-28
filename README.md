@@ -33,7 +33,6 @@ I have used deep-learning based semantic segmentation to train phone image overl
 A detailed report on the approach can be found by clicking [here](https://docs.google.com/document/d/1ziBdYydsb_SrgVoJ1SBRXgFfwIXS-Ni4Y2kbPInyRq0/edit?usp=sharing)
 
 
-
 ### Collab Notebooks
 
 To generate the synthetic data and train the network, the code for the approach can be found [here](https://colab.research.google.com/drive/1mxhfYGMMuiix0SM-NHC4b9jkDDTRYxQO?usp=sharing)
