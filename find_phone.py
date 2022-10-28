@@ -21,4 +21,4 @@ if __name__ == '__main__':
       print(e)
 
   phone_finder = PhoneFinder()
-  phone_finder.test_phone_finder(params, test_img_path)
+  phone_finder.find_phone(params, test_img_path)

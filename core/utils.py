@@ -33,3 +33,16 @@ def random_paste(background_image, stock_image, min_scale=0.05, max_scale=0.1):
     background_image.paste(resized_stock_image, (start_w, start_h), resized_stock_image)
     return background_image, canvas_image
     
+def load_labels(labels_path):
+
+  label_data = {}
+
+  with open(labels_path) as f: 
+    lines = f.readlines()
+
+    for line in lines:
+      path, x, y = line.split()
+      x = float(x); y = float(y)
+      label_data[path] = [x, y]
+
+  return label_data
