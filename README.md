@@ -4,8 +4,14 @@
 
 Repository to train a phone finder, find normalied coordinates of a phone in a given image and evaluate the phone finderr
 
-
 ### Usage
+
+For installation of the libraries and packaged, run the below command
+
+```
+$ pip install -r requirements.txt
+```
+
 
 For training the model, run the below command
 
