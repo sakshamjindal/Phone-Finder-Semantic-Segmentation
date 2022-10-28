@@ -1,11 +1,8 @@
 '''
-  Test phone finder on given dataset, calculate the accuracy
+  Test phone finder on given image and ouput the normalised x and y coordinates
 '''
 
-import os
-import cv2
-from tqdm import tqdm
-
+import sys
 from phone_finder import PhoneFinder
 
 if __name__ == '__main__':

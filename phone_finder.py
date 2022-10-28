@@ -1,5 +1,5 @@
 '''
-    Phone finder application modules to train and infer a phone finder model
+  Train phone finder on a generated synthetic datset
 '''
 
 import random
@@ -18,7 +18,7 @@ from core.model import create_model
 from core.datamodule import DataModule
 from segmenter import SemanticSegmenter
 
-from core.postprocessing import 
+from core.postprocessing import get_tight_polygon_from_mask
 
 class PhoneFinder():
 	
@@ -50,7 +50,6 @@ class PhoneFinder():
 
 
 		## start the training
-		# params["num_epochs"]
 		segmenter.train_and_test(params["num_epochs"])
 
 
