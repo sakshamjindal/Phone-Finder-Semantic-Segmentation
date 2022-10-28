@@ -75,7 +75,7 @@ class PhoneFinder():
 	
 		print(x_norm, y_norm)
 
-	def test_phone_finder(self, params, test_image_root):
+	def evaluate_phone_finder(self, params, test_image_root):
 
 		## get test image path
 		image_paths = glob.glob(os.path.join(test_image_root, "*.jpg"))

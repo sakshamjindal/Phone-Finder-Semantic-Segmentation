@@ -17,4 +17,4 @@ if __name__ == '__main__':
         print(e)
 
     phone_finder = PhoneFinder()
-    phone_finder.test_phone_finder(params, folder)
+    phone_finder.evaluate_phone_finder(params, folder)
