@@ -1,79 +1,85 @@
 '''
-	Phone detection system
+    Phone finder application modules to train and infer a phone finder model
 '''
+
+import random
+
+import os
+import glob
+from PIL import Image
+import scipy
 import numpy as np
-import cv2
-import joblib
-import os.path
-from sklearn.kernel_ridge import KernelRidge
+import matplotlib.pyplot as plt
+from typing import Optional, Union
+
+from core.dataset import IphoneDataset, train_augmentations, test_augmentations
+from core.generator import SyntheticDataGenerator
+from core.model import create_model
+from core.datamodule import DataModule
+from segmenter import SemanticSegmenter
+
+from core.postprocessing import 
 
 class PhoneFinder():
+	
 	def __init__(self):
-		if os.path.isfile('clf.model'):
-			self.clf = joblib.load('clf.model')
+		pass
+
+	def train_phone_finder(self, params):
+
+		# generate the synthetic dataset
+		data_generator = SyntheticDataGenerator()
+		trainset, valset = data_generator.generate_synthetic_dataset()
+
+
+		## load the datasets
+		train_dataset = IphoneDataset(trainset, transforms = train_augmentations(params["image_size"]))
+		val_dataset = IphoneDataset(valset, transforms = test_augmentations(params["image_size"]))
+
+		## initialise the model
+		model = create_model(output_channels = params["num_classes"])
+
+		## initialise the datamodule
+		datamodule = DataModule(train_dataset,
+								val_dataset,
+								batch_size = params["batch_size"],
+								num_workers = params["num_workers"]
+								)
+		## initialise the segmenter module
+		segmenter = SemanticSegmenter(model, datamodule, params)
+
+
+		## start the training
+		# params["num_epochs"]
+		segmenter.train_and_test(params["num_epochs"])
+
+
+	def test_phone_finder(self, params, test_img_path):
+
+		## initialise the model
+		model = create_model(output_channels = params["num_classes"])
+
+		## initialise the segmenter module
+		segmenter = SemanticSegmenter(model, None, params, mode = "inference", model_path = params["model_path"])
+
+		## do prediction from the deep learning model here
+		test_img_tensor, pred_tensor = segmenter.predict_single_image(test_img_path)
+
+		## check if mask is detected
+		## if yes - find a tight convex hull around the mask
+		if torch.sum(pred_tensor).item()==0:
+			phone_found = False
+			x_norm = 0.0
+			y_norm = 0.0
 		else:
-			self.clf = KernelRidge(alpha = 1.0)
-	def train_segment(self, X, y):
-		'''
-			Train a color classifier to find the area of phone
-			Inputs:
-				X - n*3 numpy array, pixels for training
-				y - label of each pixel. 1: phone, 0: other 
-		'''
-		print("training ...")
-		self.clf.fit(X, y)
-		joblib.dump(self.clf, 'clf.model')
-		print("model saved in clf.model")
-		return
+			phone_found = True
+			polygon_points = get_tight_polygon_from_mask(pred_tensor)
+			x_norm, y_norm  = (phone_location[1]/params["image_size"][1]).item(), (phone_location[0]/params["image_size"][0]).item()
+	
+		print(x_norm, y_norm)
+		
 
-	def segment_image(self, img):
-		'''
-			Obtain a segmented image using a color classifier,
-			Inputs:
-				img - input image
-			Outputs:
-				mask_img - a binary image with 1 if the pixel in the original image is black and 0 otherwise
-		'''
-		img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-		img = np.array(img)
-		img = img.astype(np.float64)/255.0
-		h,w = img.shape[:2]
-		img_vector = img.reshape(w*h, 3)
-		mask_vactor = self.clf.predict(img_vector)
-		mask_img = mask_vactor.reshape([h, w])
-		mask_img = np.array(mask_img*255, dtype = np.uint8)
-		mask_img = cv2.GaussianBlur(mask_img,(5,5),0)
-		mask_img =  np.where(mask_img < 110, 255, 0)	
-		return mask_img.astype(np.uint8)
 
-	def get_bounding_boxes(self, img):
-		'''
-			Find the bounding boxes of the phone
-			call other functions in this class if needed
-			
-			Inputs:
-				img - input image
-			Outputs:
-				center - [x, y], center of the phone in image, [-1, -1] if no phone is found
-		'''
-		mask_img = self.segment_image(img) 
-		contours, _ = cv2.findContours(mask_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-		centers = []
-		for c in contours:
-			rect = cv2.minAreaRect(c)
-			w = rect[1][0]
-			h = rect[1][1]
-			if(w*h < 150):
-				continue
-			if (w*h>1000):
-				continue
-			if (w/h > 2.5):
-				continue
-			if (h/w > 2.5):
-				continue
-			centers.append([rect[0][0]*1.0/img.shape[1], rect[0][1]*1.0/img.shape[0]])
-		if not centers:
-			return [-1, -1]
-		return centers[0]
+
 		
 		
