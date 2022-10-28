@@ -1,15 +1,11 @@
 import torch
-import os
-import glob
 from PIL import Image
-import scipy
 import numpy as np
 from torchvision import transforms as T
 import matplotlib.pyplot as plt
-from typing import Optional, Union
+from typing import Union
 
-import random
-
+from core.trainer import Trainer
 
 class SemanticSegmenter():
 
@@ -45,7 +41,6 @@ class SemanticSegmenter():
 
     # Usually passed in inference mode 
     if model_path is not None:
-      print("Loading model weights")
       self.model.load_state_dict(torch.load(model_path, map_location=self.device)) 
 
     # Load trainer only in training mode

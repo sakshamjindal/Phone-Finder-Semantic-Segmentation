@@ -5,6 +5,13 @@
 import sys
 from phone_finder import PhoneFinder
 
+params = {
+    "image_size" : (256, 256),
+    "num_classes": 2,
+    "device" : "cuda",
+    "model_path": "best_model-3.pth"
+}
+
 if __name__ == '__main__':
 
   try:

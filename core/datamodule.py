@@ -1,3 +1,6 @@
+from torch.utils.data import DataLoader, Dataset
+
+
 class DataModule:
 
   def __init__(
@@ -6,7 +9,7 @@ class DataModule:
       val_dataset,
       batch_size: int = 4,
       **kwargs
-      ):
+  ):
 
     self.train_dataset = train_dataset
     self.val_dataset = val_dataset
@@ -24,7 +27,8 @@ class DataModule:
             shuffle = True, 
             num_worker = self.num_workers,
             batch_size = self.batch_size
-    )
+   )
+  
   @property              
   def val_loader(self):
     return self._data_loader(

@@ -2,9 +2,6 @@ import torch
 from torch.optim import lr_scheduler
 import torch.optim as optim
 import torch.nn as nn
-import time
-import copy
-from collections import defaultdict
 
 from core.callbacks import EarlyStopping, MetricMonitor
 
@@ -153,4 +150,4 @@ class Trainer():
 
   def load_model(self, model_path = "best_model.pth"):
     """Loads the model from model path"""
-    self.model.load_state_dict(torch.load(path))
+    self.model.load_state_dict(torch.load(model_path))

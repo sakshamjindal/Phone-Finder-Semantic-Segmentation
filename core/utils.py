@@ -1,6 +1,7 @@
 import random
 from PIL import Image
 
+
 def random_paste(background_image, stock_image, min_scale=0.05, max_scale=0.1):
     """Randomly scales and pastes the stock image onto the background image"""
     

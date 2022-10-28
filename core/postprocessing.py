@@ -1,11 +1,12 @@
+import math
 import torch
 
 def orientation (
-      point1: torch.Tensor, 
-      point2: torch.Tensor, 
-      point3: torch.Tensor
-    ):
-  
+    point1: torch.Tensor, 
+    point2: torch.Tensor, 
+    point3: torch.Tensor
+):
+
     """
     Checks if orientation of points is counter-clockwise (1), clockwise (-1) and co-linear (0)
     """
@@ -22,9 +23,9 @@ def orientation (
         return 0
     
 def dist(
-      point1: torch.Tensor,
-      point2: torch.Tensor
-    ):
+    point1: torch.Tensor,
+    point2: torch.Tensor
+):
     """
     Calculates the distance between 2 points
     """
@@ -33,16 +34,16 @@ def dist(
 
 
 def create_polygon(points: torch.Tensor) -> torch.LongTensor:
-    
+
     """
-    Implentation of Jarvis Scan algorithm : Idea is to find the most counter-cloclwise point 
+    Implentation of Jarvis Scan algorithm : Idea is to find the most counter-clockwise point
     after adding the left-most point and keep iterating untill we arrive at the first point
     """
-    
+
     # find the leftmost point
     # if two points have same leftmost coordinate
     # find the one with the maximum y-coordinate
-    left_most_point =  min(points, key = lambda point: (point[0], -point[1]))
+    left_most_point = min(points, key=lambda point: (point[0], -point[1]))
     convex_hull = []
 
     # hull point represents last point added to hull

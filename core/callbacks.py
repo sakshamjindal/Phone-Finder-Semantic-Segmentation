@@ -1,3 +1,4 @@
+import numpy as np
 from collections import defaultdict
 
 
@@ -54,3 +55,4 @@ class EarlyStopping:
         self.best_score = score
         self.counter = 0
         self.val_loss_min = val_loss
+        

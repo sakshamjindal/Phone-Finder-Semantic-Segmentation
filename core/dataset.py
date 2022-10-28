@@ -1,14 +1,9 @@
 # make a dataset from of iphone images pasted on background images
 
 from typing import Optional, List
-
 import torch
-from torch.utils.data import DataLoader, Dataset, Subset
+from torch.utils.data import Dataset
 from torchvision import transforms as T
-from albumentations.pytorch import ToTensorV2
-import torchvision
-import torchvision.transforms as transforms
-
 import albumentations as A
 
 def train_augmentations(image_size=(256, 256)):

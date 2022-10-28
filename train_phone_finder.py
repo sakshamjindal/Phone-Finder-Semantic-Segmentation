@@ -3,14 +3,14 @@ import sys
 from phone_finder import PhoneFinder
 
 params = {
-    "num_epochs" : 15,
+    "num_epochs": 15,
     "num_classes": 2,
     "batch_size": 4,
     "num_workers": 2,
-    "log_frequency" : 1,
-    "device" : "cuda",
-    "ce_weights" : [1, 10],
-    "image_size" : (256, 256)
+    "log_frequency": 1,
+    "device": "cuda",
+    "ce_weights": [1, 10],
+    "image_size": (256, 256)
 }
 
 if __name__ == '__main__':
@@ -22,5 +22,3 @@ if __name__ == '__main__':
 
     phone_finder = PhoneFinder()
     phone_finder.train_phone_finder(params)
-
-
