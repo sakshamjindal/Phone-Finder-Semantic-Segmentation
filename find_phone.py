@@ -3,7 +3,7 @@
 '''
 
 import sys
-from phone_finder import PhoneFinder
+from core.phone_finder import PhoneFinder
 
 params = {
     "image_size" : (256, 256),
