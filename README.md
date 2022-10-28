@@ -30,7 +30,7 @@ $ python find_phone.py ./path_to_image
 
 I have used deep-learning based semantic segmentation to train phone image overlaid on background images. To train the deep neural network, I generated a synthetic image dataset that should eventually look closer to the images supplied in the dataset. I used this dataset to train a DeepLav3+ model to generate semantic masks for the detection of phone. Further, I used Jarvis Marching algorithm to generate a convex hull (and thus polygon points around the mask) and used the centroid of this polygon as indication of prediction of location of the phone.
 
-A detailed report on the approach can be found by clicking [here]([https://docs.google.com/document/d/1ziBdYydsb_SrgVoJ1SBRXgFfwIXS-Ni4Y2kbPInyRq0/edit?usp=sharing)
+A detailed report on the approach can be found by clicking [here](https://docs.google.com/document/d/1ziBdYydsb_SrgVoJ1SBRXgFfwIXS-Ni4Y2kbPInyRq0/edit?usp=sharing)
 
 
 
